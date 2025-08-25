@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block title %}Tambah Produk Baru{% endblock %}
+
+{% block content %}
+    <h1 class="mb-4 text-center" style="font-size: 1.5rem;">Tambah Produk Baru</h1>
+    <div class="card shadow-sm rounded-3 mx-auto" style="max-width: 600px;">
+        <div class="card-body p-4">
+            <form method="POST" action="{{ url_for('add_product') }}" enctype="multipart/form-data">
+                <div class="mb-3">
+                    <label for="name" class="form-label">Nama Produk</label>
+                    <input type="text" class="form-control rounded-pill" id="name" name="name" required>
+                </div>
+                <div class="mb-3">
+                    <label for="category" class="form-label">Kategori Produk</label>
+                    <input type="text" class="form-control rounded-pill" id="category" name="category" placeholder="Contoh: Elektronik, Pakaian, Buku" required>
+                </div>
+                <div class="mb-3">
+                    <label for="description" class="form-label">Deskripsi</label>
+                    <textarea class="form-control rounded-3" id="description" name="description" rows="5" required></textarea>
+                </div>
+                <div class="mb-3">
+                    <label for="price" class="form-label">Harga (Rp)</label>
+                    <input type="number" class="form-control rounded-pill" id="price" name="price" step="0.01" required>
+                </div>
+                
+                <div class="mb-3">
+                    <label for="os" class="form-label">Sistem Operasi (OS)</label>
+                    <input type="text" class="form-control rounded-pill" id="os" name="os" placeholder="Contoh: Windows 11, macOS, Android">
+                </div>
+                <div class="mb-3">
+                    <label for="specifications" class="form-label">Spesifikasi</label>
+                    <textarea class="form-control rounded-3" id="specifications" name="specifications" rows="3" placeholder="Contoh:&#10;- Processor: AMD Ryzen 5&#10;- RAM: 16GB DDR4&#10;- Storage: 512GB SSD"></textarea>
+                </div>
+                <div class="mb-3">
+                    <label for="packages" class="form-label">Isi Paket</label>
+                    <textarea class="form-control rounded-3" id="packages" name="packages" rows="3" placeholder="Contoh:&#10;- 1x Unit Laptop&#10;- 1x Charger&#10;- 1x Manual Book"></textarea>
+                </div>
+                <div class="mb-3">
+                    <label for="advantages" class="form-label">Kelebihan</label>
+                    <textarea class="form-control rounded-3" id="advantages" name="advantages" rows="3" placeholder="Contoh:&#10;- Desain tipis dan ringan&#10;- Baterai tahan lama&#10;- Performa kencang"></textarea>
+                </div>
+                <div class="mb-3">
+                    <label for="notes" class="form-label">Catatan</label>
+                    <textarea class="form-control rounded-3" id="notes" name="notes" rows="3" placeholder="Tambahkan catatan khusus tentang produk di sini."></textarea>
+                </div>
+
+                <div class="mb-3">
+                    <label for="images" class="form-label">Gambar Produk (Bisa lebih dari satu)</label>
+                    <input type="file" class="form-control rounded-pill" id="images" name="images" accept="image/*" multiple> {# Tambahkan 'multiple' #}
+                    <small class="form-text text-muted">Anda bisa memilih beberapa file gambar sekaligus.</small>
+                </div>
+                <div class="d-grid gap-2 mt-4">
+                    <button type="submit" class="btn btn-primary btn-lg rounded-pill">Tambah Produk</button>
+                    <a href="{{ url_for('index') }}" class="btn btn-outline-secondary btn-lg rounded-pill">Batal</a>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}
