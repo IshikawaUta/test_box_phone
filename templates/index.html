@@ -3,215 +3,27 @@
 {% block title %}Daftar Produk{% endblock %}
 
 {% block content %}
-    <style>
-        /* CSS untuk animasi scrolling horizontal */
-        @keyframes scroll-left {
-            0% {
-                transform: translateX(0%);
-            }
-            100% {
-                transform: translateX(-50%);
-            }
-        }
-        .animate-scroll {
-            animation: scroll-left 30s linear infinite;
-        }
-
-        /* Jeda animasi saat kursor diarahkan ke atas */
-        .animate-scroll:hover {
-            animation-play-state: paused;
-        }
-
-        /* Pastikan logo tidak menyusut */
-        .logo-item {
-            flex-shrink: 0;
-            width: 176px; /* 44 * 4px, setara dengan w-44 di Tailwind */
-            padding: 0 16px; /* setara dengan px-4 di Tailwind */
-            filter: grayscale(1);
-        }
-        .logo-item:hover {
-            filter: grayscale(0);
-        }
-        .logo-card {
-            transition: all 0.3s ease;
-        }
-        .logo-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 12px rgba(0,0,0,0.15);
-        }
-        .logo-img {
-            width: 80px;
-        }
-    </style>
-
-    <div class="gradient-bg-blue-purple text-white text-center p-4 rounded-3 shadow-lg mb-5 animate__animated animate__fadeInDown" style="border-radius: 0 !important;">
-        <h2 class="fw-bold mb-3">Jual PhoneFarm & Sistem Otomatisasi Box Phone</h2>
-        <p class="lead mb-4">NodeFarm menyediakan Box Phone untuk membangun PhoneFarm skala kecil hingga besar. Kami melayani pengadaan perangkat, rak, sistem otomatisasi, dan konsultasi teknis.</p>
-        <a href="#" class="btn btn-outline-warning btn-lg rounded-pill">
-            <i class="fas fa-arrow-right me-2"></i> Hubungi Kami
-        </a>
-    </div>
-
-    <section class="py-3 bg-slate-300">
-        <div class="container">
-            <div class="text-center mb-3">
-                <h2 class="text-primary" style="font-size: 1.5rem;">
-                    TRUSTED BY
-                </h2>
-            </div>
-            <div class="scroll-container overflow-hidden p-5 bg-slate-300">
-                <div class="animate-scroll d-flex flex-nowrap" style="width: max-content;">
-                    <div class="logo-item">
-                        <div class="logo-card h-100 d-flex align-items-center justify-content-center bg-white rounded shadow-sm p-4 border border-success">
-                            <img class="logo-img" src="{{ url_for('static', filename='img/facebook.png') }}" alt="Facebook">
-                        </div>
-                    </div>
-                    <div class="logo-item">
-                        <div class="logo-card h-100 d-flex align-items-center justify-content-center bg-white rounded shadow-sm p-4 border border-success">
-                            <img class="logo-img" src="{{ url_for('static', filename='img/instagram.png') }}" alt="Instagram">
-                        </div>
-                    </div>
-                    <div class="logo-item">
-                        <div class="logo-card h-100 d-flex align-items-center justify-content-center bg-white rounded shadow-sm p-4 border border-success">
-                            <img class="logo-img" src="{{ url_for('static', filename='img/googlereview.png') }}" alt="GoogleReviw">
-                        </div>
-                    </div>
-                    <div class="logo-item">
-                        <div class="logo-card h-100 d-flex align-items-center justify-content-center bg-white rounded shadow-sm p-4 border border-success">
-                            <img class="logo-img" src="{{ url_for('static', filename='img/lazada.png') }}" alt="Lazada">
-                        </div>
-                    </div>
-                    <div class="logo-item">
-                        <div class="logo-card h-100 d-flex align-items-center justify-content-center bg-white rounded shadow-sm p-4 border border-success">
-                            <img class="logo-img" src="{{ url_for('static', filename='img/massanger.png') }}" alt="Massanger">
-                        </div>
-                    </div>
-                    <div class="logo-item">
-                        <div class="logo-card h-100 d-flex align-items-center justify-content-center bg-white rounded shadow-sm p-4 border border-success">
-                            <img class="logo-img" src="{{ url_for('static', filename='img/shopee.png') }}" alt="Shopee">
-                        </div>
-                    </div>
-                    <div class="logo-item">
-                        <div class="logo-card h-100 d-flex align-items-center justify-content-center bg-white rounded shadow-sm p-4 border border-success">
-                            <img class="logo-img" src="{{ url_for('static', filename='img/spotify.png') }}" alt="Spotify">
-                        </div>
-                    </div>
-                    <div class="logo-item">
-                        <div class="logo-card h-100 d-flex align-items-center justify-content-center bg-white rounded shadow-sm p-4 border border-success">
-                            <img class="logo-img" src="{{ url_for('static', filename='img/telegram.png') }}" alt="Telegram">
-                        </div>
-                    </div>
-                    <div class="logo-item">
-                        <div class="logo-card h-100 d-flex align-items-center justify-content-center bg-white rounded shadow-sm p-4 border border-success">
-                            <img class="logo-img" src="{{ url_for('static', filename='img/tiktok.png') }}" alt="Tiktok">
-                        </div>
-                    </div>
-                    <div class="logo-item">
-                        <div class="logo-card h-100 d-flex align-items-center justify-content-center bg-white rounded shadow-sm p-4 border border-success">
-                            <img class="logo-img" src="{{ url_for('static', filename='img/tokopedia.png') }}" alt="TokoPedia">
-                        </div>
-                    </div>
-                    <div class="logo-item">
-                        <div class="logo-card h-100 d-flex align-items-center justify-content-center bg-white rounded shadow-sm p-4 border border-success">
-                            <img class="logo-img" src="{{ url_for('static', filename='img/whatsapp.png') }}" alt="WhatsApp">
-                        </div>
-                    </div>
-
-                    <div class="logo-item">
-                        <div class="logo-card h-100 d-flex align-items-center justify-content-center bg-white rounded shadow-sm p-4 border border-success">
-                            <img class="logo-img" src="{{ url_for('static', filename='img/facebook.png') }}" alt="Facebook">
-                        </div>
-                    </div>
-                    <div class="logo-item">
-                        <div class="logo-card h-100 d-flex align-items-center justify-content-center bg-white rounded shadow-sm p-4 border border-success">
-                            <img class="logo-img" src="{{ url_for('static', filename='img/instagram.png') }}" alt="Instagram">
-                        </div>
-                    </div>
-                    <div class="logo-item">
-                        <div class="logo-card h-100 d-flex align-items-center justify-content-center bg-white rounded shadow-sm p-4 border border-success">
-                            <img class="logo-img" src="{{ url_for('static', filename='img/googlereview.png') }}" alt="GoogleReviw">
-                        </div>
-                    </div>
-                    <div class="logo-item">
-                        <div class="logo-card h-100 d-flex align-items-center justify-content-center bg-white rounded shadow-sm p-4 border border-success">
-                            <img class="logo-img" src="{{ url_for('static', filename='img/lazada.png') }}" alt="Lazada">
-                        </div>
-                    </div>
-                    <div class="logo-item">
-                        <div class="logo-card h-100 d-flex align-items-center justify-content-center bg-white rounded shadow-sm p-4 border border-success">
-                            <img class="logo-img" src="{{ url_for('static', filename='img/massanger.png') }}" alt="Massanger">
-                        </div>
-                    </div>
-                    <div class="logo-item">
-                        <div class="logo-card h-100 d-flex align-items-center justify-content-center bg-white rounded shadow-sm p-4 border border-success">
-                            <img class="logo-img" src="{{ url_for('static', filename='img/shopee.png') }}" alt="Shopee">
-                        </div>
-                    </div>
-                    <div class="logo-item">
-                        <div class="logo-card h-100 d-flex align-items-center justify-content-center bg-white rounded shadow-sm p-4 border border-success">
-                            <img class="logo-img" src="{{ url_for('static', filename='img/spotify.png') }}" alt="Spotify">
-                        </div>
-                    </div>
-                    <div class="logo-item">
-                        <div class="logo-card h-100 d-flex align-items-center justify-content-center bg-white rounded shadow-sm p-4 border border-success">
-                            <img class="logo-img" src="{{ url_for('static', filename='img/telegram.png') }}" alt="Telegram">
-                        </div>
-                    </div>
-                    <div class="logo-item">
-                        <div class="logo-card h-100 d-flex align-items-center justify-content-center bg-white rounded shadow-sm p-4 border border-success">
-                            <img class="logo-img" src="{{ url_for('static', filename='img/tiktok.png') }}" alt="Tiktok">
-                        </div>
-                    </div>
-                    <div class="logo-item">
-                        <div class="logo-card h-100 d-flex align-items-center justify-content-center bg-white rounded shadow-sm p-4 border border-success">
-                            <img class="logo-img" src="{{ url_for('static', filename='img/tokopedia.png') }}" alt="TokoPedia">
-                        </div>
-                    </div>
-                    <div class="logo-item">
-                        <div class="logo-card h-100 d-flex align-items-center justify-content-center bg-white rounded shadow-sm p-4 border border-success">
-                            <img class="logo-img" src="{{ url_for('static', filename='img/whatsapp.png') }}" alt="WhatsApp">
-                        </div>
-                    </div>
-                </div>
+    <div class="row text-center mb-5 hero-section">
+        <div class="col-12">
+            <h1 class="main-hero-title animate__animated animate__fadeInDown">
+                Android Box Phone Farm <span class="multi-platform-highlight">Multi-platform</span>
+            </h1>
+            <p class="hero-description animate__animated animate__fadeInUp">
+                Solusi untuk Meningkatkan Jumlah Nick yang Banyak Seperti Pengguna Sebenarnya
+            </p>
+            
+            <div class="hero-buttons mt-4 animate__animated animate__fadeInUp animate__delay-1s">
+                <a href="{{ url_for('login') }}" class="btn btn-primary btn-lg rounded-pill custom-btn-buy me-2">
+                    <i class="fas fa-shopping-bag me-2"></i> Buy Now
+                </a>
+                <a href="{{ url_for('product') }}" class="btn btn-outline-primary btn-lg rounded-pill custom-btn-learn">
+                    <i class="fas fa-box-open me-2"></i> Produk
+                </a>
             </div>
         </div>
-    </section>
-
-    <h1 class="mb-4 text-primary-gradient text-center" style="font-size: 1.5rem;">Daftar Produk</h1>
-
-    {# Filter Kategori #}
-    <div class="mb-4 p-3 bg-white rounded-3 shadow-sm">
-        <h5 class="mb-3">Filter Berdasarkan Kategori:</h5>
-        <div class="d-flex flex-wrap gap-2">
-            <a href="{{ url_for('index', category='all', q=search_query, page=1) }}" class="btn {% if selected_category == 'all' or selected_category == None %}btn-primary{% else %}btn-outline-primary{% endif %} rounded-pill">
-                <i class="fas fa-th-large"></i> Semua
-            </a>
-            {% for category in all_categories %}
-                <a href="{{ url_for('index', category=category, q=search_query, page=1) }}" class="btn {% if selected_category == category %}btn-primary{% else %}btn-outline-primary{% endif %} rounded-pill">
-                    <i class="fas fa-tag"></i> {{ category }}
-                </a>
-            {% endfor %}
-        </div>
     </div>
 
-    {# Bilah Pencarian Produk #}
-    <div class="mb-4 p-3 bg-white rounded-3 shadow-sm">
-        <h5 class="mb-3">Cari Produk:</h5>
-        <form class="d-flex" action="{{ url_for('index') }}" method="GET">
-            <input class="form-control me-2 rounded-pill" type="search" placeholder="Cari berdasarkan nama produk..." aria-label="Search" name="q" value="{{ search_query | default('') }}">
-            <input type="hidden" name="category" value="{{ selected_category | default('all') }}"> {# Maintain category when searching #}
-            <input type="hidden" name="page" value="1"> {# Reset ke halaman 1 saat mencari #}
-            <button class="btn btn-outline-success rounded-pill" type="submit">
-                <i class="fas fa-search"></i> Cari
-            </button>
-            {% if search_query or selected_category != 'all' %}
-                <a href="{{ url_for('index', category='all', q='') }}" class="btn btn-outline-secondary ms-2 rounded-pill">
-                    <i class="fas fa-times-circle"></i> Reset Filter
-                </a>
-            {% endif %}
-        </form>
-    </div>
-
+    <h1 class="mb-4 text-primary-gradient text-center" style="font-size: 1.5rem;">Produk Kami</h1>
     <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
         {% if products %}
             {% for product in products %}
@@ -220,7 +32,7 @@
                     {% if product.image_urls %} {# Cek apakah ada daftar gambar #}
                         <img src="{{ product.image_urls[0] }}" class="card-img-top p-3 rounded-top-3 lazyload" alt="{{ product.name }}" style="max-height: 200px; object-fit: contain;border-bottom: 1px solid #11a397;">
                     {% else %}
-                        <img src="https://placehold.co/400x200/cccccc/333333?text=Tidak+Ada+Gambar" class="card-img-top p-3 rounded-top-3 lazyload" alt="Tidak Ada Gambar" style="max-height: 200px; object-fit: contain;">
+                        <img src="{{ url_for('static', filename='img/logo.jpg') }}" class="card-img-top p-3 rounded-top-3 lazyload" alt="logo box phone" style="max-height: 200px; object-fit: contain;">
                     {% endif %}
                     <div class="card-body d-flex flex-column">
                         <h5 class="card-title text-primary">{{ product.name }}</h5>
@@ -270,81 +82,68 @@
         {% endif %}
     </div>
 
-    {# Pagination Controls #}
-    {% if total_pages > 1 %}
-    <nav aria-label="Navigasi Halaman Produk" class="mt-5">
-        <ul class="pagination justify-content-center flex-wrap">
-            <li class="page-item {% if current_page == 1 %}disabled{% endif %}">
-                <a class="page-link" href="{{ url_for('index', page=current_page - 1, q=search_query, category=selected_category) }}" aria-label="Previous">
-                    <span aria-hidden="true">&laquo;</span>
-                </a>
-            </li>
-            {% for p in range(1, total_pages + 1) %}
-                <li class="page-item {% if p == current_page %}active{% endif %}">
-                    <a class="page-link" style="background: #11a397;" href="{{ url_for('index', page=p, q=search_query, category=selected_category) }}">{{ p }}</a>
-                </li>
-            {% endfor %}
-            <li class="page-item {% if current_page == total_pages %}disabled{% endif %}">
-                <a class="page-link" href="{{ url_for('index', page=current_page + 1, q=search_query, category=selected_category) }}" aria-label="Next">
-                    <span aria-hidden="true">&raquo;</span>
-                </a>
-            </li>
-        </ul>
-    </nav>
-    {% endif %}
-
-    <section id="features" class="py-5 mt-4 bg-light rounded-3 mb-5 shadow-sm">
-    <div class="container">
-        <div class="text-center mb-5">
-            <span class="d-inline-block px-4 py-1 gradient-bg-blue-purple text-white rounded-pill text-sm font-semibold mb-3 animate__animated animate__slideInDown">FITUR UNGGULAN</span>
-            <h2 class="text-3xl font-bold text-gray-900 mb-3 animate__animated animate__fadeInDown animate__delay-1s">Fitur Unggulan Box Phone</h2>
-            <p class="lead text-gray-600 max-w-3xl mx-auto animate__animated animate__fadeIn animate__delay-2s">Box Phone menyediakan semua yang Anda butuhkan untuk mengelola dan meningkatkan skala operasi perangkat seluler Anda secara efisien dengan keandalan tingkat perusahaan.</p>
+<div class="container my-5">
+    <div class="text-center mb-5">
+        <h2 class="fw-bold text-primary">Discover everything you can do with Box Phone</h2>
+        <p class="lead text-muted">Explore our suite of features designed to streamline your operations, drive sales, and enhance customer satisfaction.</p>
+    </div>
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        <div class="col">
+            <div class="card h-100 shadow-sm rounded-3">
+                <div class="card-body d-flex flex-column text-center">
+                    <h5 class="card-title text-navy fw-bold">PHONE BOX CASE ONLY</h5>
+                    <p class="card-text text-muted small">Hanya Casing Aluminium Phone Box Dengan 20 Slot Untuk Smartphone Android</p>
+                    <h4 class="mt-auto price-text-navy mb-3">Rp 2.500.000 <span class="fw-normal small text-muted">/Pcs</span></h4>
+                    <ul class="list-unstyled text-start small">
+                        <li><i class="fas fa-check text-success me-2"></i> Phone Box Case</li>
+                        <li><i class="fas fa-times text-muted me-2"></i> 20x Smartphone Android</li>
+                        <li><i class="fas fa-times text-muted me-2"></i> 20x Kabel Jst To Bms</li>
+                        <li><i class="fas fa-times text-muted me-2"></i> 20x USBA-USBC</li>
+                        <li><i class="fas fa-times text-muted me-2"></i> Auto On & Auto Usb Debugging</li>
+                        <li><i class="fas fa-times text-muted me-2"></i> Support Sim Card All Operator Indonesia</li>
+                    </ul>
+                    <a href="{{ url_for('product') }}" class="btn btn-outline-navy btn-lg mt-auto rounded-pill">Learn More</a>
+                </div>
+            </div>
         </div>
-        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
-            <div class="col">
-                <div class="feature-card gradient-bg-blue-purple text-white p-4 h-100 rounded-xl shadow-lg border border-gray-100 transition-all duration-300 hover:border-primary-gradient animate__animated animate__fadeInUp">
-                    <i class="fas fa-server text-white text-3xl"></i>
-                    <h3 class="text-xl font-bold text-gray-900 mb-2">Casing Modular</h3>
-                    <p class="text-gray-600 small">Casing aluminium premium untuk 20 smartphone, didesain kokoh dan hemat ruang ideal untuk membangun phonefarm yang rapi dan scalable.</p>
+
+        <div class="col">
+            <div class="card h-100 shadow-sm rounded-3">
+                <div class="card-body d-flex flex-column text-center">
+                    <h5 class="card-title text-navy fw-bold">PHONE BOX FARM SAMSUNG S8+</h5>
+                    <p class="card-text text-muted small">1 Set produk Phone Box Farm dengan 20 ponsel Samsung S8+ Siap Pakai</p>
+                    <h4 class="mt-auto price-text-navy mb-3">Rp 19.800.000 <span class="fw-normal small text-muted">/Pcs</span></h4>
+                    <ul class="list-unstyled text-start small">
+                        <li><i class="fas fa-check text-success me-2"></i> Phone Box Case</li>
+                        <li><i class="fas fa-check text-success me-2"></i> 20x Samsung S8+ (Non-Root)</li>
+                        <li><i class="fas fa-check text-success me-2"></i> 20x Kabel Jst To Bms</li>
+                        <li><i class="fas fa-check text-success me-2"></i> 20x USBA-USBC</li>
+                        <li><i class="fas fa-check text-success me-2"></i> Auto On & Auto Usb Debugging</li>
+                        <li><i class="fas fa-check text-success me-2"></i> Support Sim Card All Operator Indonesia</li>
+                    </ul>
+                    <a href="{{ url_for('product') }}" class="btn btn-outline-navy btn-lg mt-auto rounded-pill">Learn More</a>
                 </div>
             </div>
-            <div class="col">
-                <div class="feature-card gradient-bg-blue-purple text-white p-4 h-100 rounded-xl shadow-lg border border-gray-100 transition-all duration-300 hover:border-primary-gradient animate__animated animate__fadeInUp animate__delay-1s">
-                    <i class="fas fa-power-off text-white text-3xl"></i>
-                    <h3 class="text-xl font-bold text-gray-900 mb-2">Auto-Power</h3>
-                    <p class="text-gray-600 small">Mengunakan bypass JST BMS agar HP bisa menyala tanpa baterai. Auto-power memastikan semua device hidup bersamaan saat mesin dinyalakan.</p>
-                </div>
-            </div>
-            <div class="col">
-                <div class="feature-card gradient-bg-blue-purple text-white p-4 h-100 rounded-xl shadow-lg border border-gray-100 transition-all duration-300 hover:border-primary-gradient animate__animated animate__fadeInUp animate__delay-2s">
-                    <i class="fas fa-desktop text-white text-3xl"></i>
-                    <h3 class="text-xl font-bold text-gray-900 mb-2">Kontrol Devices</h3>
-                    <p class="text-gray-600 small">Software khusus untuk mengontrol seluruh perangkat langsung dari satu komputer. klik, install, jalankan otomatisasi dengan efisien.</p>
-                </div>
-            </div>
-            <div class="col">
-                <div class="feature-card gradient-bg-blue-purple text-white p-4 h-100 rounded-xl shadow-lg border border-gray-100 transition-all duration-300 hover:border-primary-gradient animate__animated animate__fadeInUp">
-                    <i class="fas fa-plug text-white text-3xl"></i>
-                    <h3 class="text-xl font-bold text-gray-900 mb-2">Plug & Play</h3>
-                    <p class="text-gray-600 small">Paket fullset tersedia. tinggal colok, konek ke PC, dan langsung farming. Cocok untuk pemula "punya tujuan" maupun skala bisnis.</p>
-                </div>
-            </div>
-            <div class="col">
-                <div class="feature-card gradient-bg-blue-purple text-white p-4 h-100 rounded-xl shadow-lg border border-gray-100 transition-all duration-300 hover:border-primary-gradient animate__animated animate__fadeInUp animate__delay-1s">
-                    <i class="fas fa-fingerprint text-white text-3xl"></i>
-                    <h3 class="text-xl font-bold text-gray-900 mb-2">Fingerprint</h3>
-                    <p class="text-gray-600 small">Setiap device bisa dijalankan dengan fingerprint dan identitas yang berbeda untuk agar setiap devices memiliki ip berbeda gunakan proxy.</p>
-                </div>
-            </div>
-            <div class="col">
-                <div class="feature-card gradient-bg-blue-purple text-white p-4 h-100 rounded-xl shadow-lg border border-gray-100 transition-all duration-300 hover:border-primary-gradient animate__animated animate__fadeInUp animate__delay-2s">
-                    <i class="fas fa-book-open text-white text-3xl"></i>
-                    <h3 class="text-xl font-bold text-gray-900 mb-2">Document</h3>
-                    <p class="text-gray-600 small">Document instalasi dan penggunaan dasar khusus pembeli phonefarm di nodefarm.id</p>
+        </div>
+
+        <div class="col">
+            <div class="card h-100 shadow-sm rounded-3">
+                <div class="card-body d-flex flex-column text-center">
+                    <h5 class="card-title text-navy fw-bold">PHONE BOX FARM SAMSUNG NOTE 8</h5>
+                    <p class="card-text text-muted small">1 Set produk Phone Box Farm dengan 20 ponsel Samsung Note 8 Siap Pakai</p>
+                    <h4 class="mt-auto price-text-navy mb-3">Rp 21.800.000 <span class="fw-normal small text-muted">/Pcs</span></h4>
+                    <ul class="list-unstyled text-start small">
+                        <li><i class="fas fa-check text-success me-2"></i> Phone Box Case</li>
+                        <li><i class="fas fa-check text-success me-2"></i> 20x Samsung Note 8 (Non-Root)</li>
+                        <li><i class="fas fa-check text-success me-2"></i> 20x Kabel Jst To Bms</li>
+                        <li><i class="fas fa-check text-success me-2"></i> 20x USBA-USBC</li>
+                        <li><i class="fas fa-check text-success me-2"></i> Auto On & Auto Usb Debugging</li>
+                        <li><i class="fas fa-check text-success me-2"></i> Support Sim Card All Operator Indonesia</li>
+                    </ul>
+                    <a href="{{ url_for('product') }}" class="btn btn-outline-navy btn-lg mt-auto rounded-pill">Learn More</a>
                 </div>
             </div>
         </div>
     </div>
-    </section>
-
+</div>
 {% endblock %}

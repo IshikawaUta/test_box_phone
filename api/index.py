@@ -57,6 +57,7 @@ db = client['test_db']
 products_collection = db['products']
 users_collection = db['users']
 reviews_collection = db['reviews']
+posts_collection = db['posts']
 
 IMGUR_CLIENT_ID = os.getenv('IMGUR_CLIENT_ID')
 if not IMGUR_CLIENT_ID:
@@ -247,6 +248,104 @@ def index():
                            current_page=page,
                            total_pages=total_pages,
                            total_products=total_products)
+
+@app.route('/product')
+def product():
+    selected_category_param = request.args.get('category')
+    search_query = request.args.get('q', '').strip()
+    page = request.args.get('page', 1, type=int)
+
+    query = {}
+    selected_category_for_template = selected_category_param
+
+    if selected_category_param and selected_category_param not in ['all', 'None']:
+        query['category'] = selected_category_param
+    else:
+        selected_category_for_template = 'all'
+
+    if search_query:
+        query['name'] = {'$regex': re.compile(search_query, re.IGNORECASE)}
+
+    total_products = products_collection.count_documents(query)
+    total_pages = ceil(total_products / PER_PAGE)
+    
+    if total_pages > 0 and page > total_pages:
+        page = total_pages
+    elif total_pages == 0:
+        page = 1
+
+    skip_count = (page - 1) * PER_PAGE
+    
+    products = list(products_collection.find(query).skip(skip_count).limit(PER_PAGE))
+    
+    all_categories = sorted(list(set(p['category'] for p in products_collection.find({}, {'category': 1}) if p.get('category'))))
+
+    print(f"MongoDB Query: {query}, Page: {page}, Skip: {skip_count}, Limit: {PER_PAGE}, Total Products: {total_products}")
+
+    return render_template('product.html', 
+                           products=products, 
+                           all_categories=all_categories, 
+                           selected_category=selected_category_for_template,
+                           search_query=search_query,
+                           current_page=page,
+                           total_pages=total_pages,
+                           total_products=total_products)
+
+@app.route('/blog')
+def blog():
+    posts = list(posts_collection.find().sort('created_at', -1))
+    return render_template('blog.html', posts=posts)
+
+@app.route('/blog/<id>')
+def blog_detail(id):
+    post = posts_collection.find_one({'_id': ObjectId(id)})
+    if post:
+        return render_template('blog_detail.html', post=post)
+    flash('Postingan blog tidak ditemukan.', 'danger')
+    return redirect(url_for('blog'))
+
+@app.route('/help')
+def help_page():
+    return render_template('help.html')
+
+@app.route('/contact')
+def contact_page():
+    return render_template('contact.html')
+
+@app.route('/contact_form_submit', methods=['POST'])
+def contact_form_submit():
+    name = request.form.get('name')
+    email = request.form.get('email')
+    subject = request.form.get('subject')
+    message_body = request.form.get('message')
+
+    if not all([name, email, subject, message_body]):
+        flash('Semua kolom wajib diisi.', 'danger')
+        return redirect(url_for('contact_page'))
+
+    try:
+        msg = Message(
+            subject=f"Kontak Baru dari Box Phone: {subject}",
+            sender=app.config['MAIL_DEFAULT_SENDER'],
+            recipients=[app.config['MAIL_DEFAULT_SENDER']]
+        )
+        msg.body = f"""
+Pesan baru dari formulir kontak:
+
+Nama: {name}
+Email: {email}
+Subjek: {subject}
+
+Pesan:
+{message_body}
+"""
+        mail.send(msg)
+        flash('Pesan Anda berhasil dikirim. Kami akan segera menghubungi Anda!', 'success')
+    except Exception as e:
+        flash(f'Gagal mengirim pesan Anda. Silakan coba lagi nanti. Error: {e}', 'danger')
+        print(f"Mail sending error (contact form): {e}")
+
+    return redirect(url_for('contact_page'))
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -648,6 +747,78 @@ def delete_product(id):
     else:
         flash('Produk tidak ditemukan.', 'danger')
     return redirect(url_for('index'))
+
+@app.route('/admin/blog/new', methods=['GET', 'POST'])
+@admin_required
+def new_blog_post():
+    if request.method == 'POST':
+        title = request.form['title']
+        content = request.form['content']
+        image_url = ''
+
+        if 'image' in request.files and request.files['image'].filename != '':
+            image_file = request.files['image']
+            image_url = upload_single_image_to_imgur(image_file)
+            if not image_url:
+                flash('Gagal mengunggah gambar ke Imgur.', 'danger')
+                return redirect(url_for('new_blog_post'))
+        
+        author = session.get('username')
+        created_at = datetime.now()
+        
+        posts_collection.insert_one({
+            'title': title,
+            'content': content,
+            'image_url': image_url,
+            'author': author,
+            'created_at': created_at
+        })
+        flash('Postingan blog berhasil ditambahkan!', 'success')
+        return redirect(url_for('blog'))
+    return render_template('admin/blog_post_form.html')
+
+@app.route('/edit_blog/<id>', methods=['GET', 'POST'])
+@admin_required
+def edit_blog(id):
+    post = posts_collection.find_one({'_id': ObjectId(id)})
+    if not post:
+        flash('Postingan blog tidak ditemukan.', 'danger')
+        return redirect(url_for('blog'))
+
+    if request.method == 'POST':
+        title = request.form['title']
+        content = request.form['content']
+        image_url = post.get('image_url', '')
+
+        if 'image' in request.files and request.files['image'].filename != '':
+            image_file = request.files['image']
+            image_url = upload_single_image_to_imgur(image_file)
+            if not image_url:
+                flash('Gagal mengunggah gambar baru ke Imgur.', 'danger')
+                return redirect(url_for('edit_blog_post', id=id))
+
+        posts_collection.update_one(
+            {'_id': ObjectId(id)},
+            {'$set': {
+                'title': title,
+                'content': content,
+                'image_url': image_url,
+                'updated_at': datetime.now()
+            }}
+        )
+        flash('Postingan blog berhasil diperbarui!', 'success')
+        return redirect(url_for('blog'))
+    return render_template('admin/blog_post_form.html', post=post)
+
+@app.route('/admin/blog/delete/<id>', methods=['POST'])
+@admin_required
+def delete_blog_post(id):
+    result = posts_collection.delete_one({'_id': ObjectId(id)})
+    if result.deleted_count == 1:
+        flash('Postingan blog berhasil dihapus.', 'success')
+    else:
+        flash('Gagal menghapus postingan blog.', 'danger')
+    return redirect(url_for('blog'))
 
 @app.route('/submit_review/<product_id>', methods=['POST'])
 def submit_review(product_id):
