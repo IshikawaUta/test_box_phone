@@ -575,7 +575,7 @@ body {
 .code-body {
     padding: 20px;
     overflow-x: auto;
-    min-height: 360px;
+    min-height: 420px;
 }
 
 pre {
