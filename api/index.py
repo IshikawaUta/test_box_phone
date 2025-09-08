@@ -211,7 +211,7 @@ def inject_cart_count():
 PER_PAGE = 3
 
 @app.route('/')
-@cache.cached(timeout=300)
+@cache.cached(timeout=2)
 def index():
     selected_category_param = request.args.get('category')
     search_query = request.args.get('q', '').strip()
@@ -254,7 +254,7 @@ def index():
                            total_products=total_products)
 
 @app.route('/product')
-@cache.cached(timeout=300)
+@cache.cached(timeout=2)
 def product():
     selected_category_param = request.args.get('category')
     search_query = request.args.get('q', '').strip()
@@ -297,13 +297,13 @@ def product():
                            total_products=total_products)
 
 @app.route('/blog')
-@cache.cached(timeout=300)
+@cache.cached(timeout=2)
 def blog():
     posts = list(posts_collection.find().sort('created_at', -1))
     return render_template('blog.html', posts=posts)
 
 @app.route('/blog/<id>')
-@cache.cached(timeout=300)
+@cache.cached(timeout=2)
 def blog_detail(id):
     post = posts_collection.find_one({'_id': ObjectId(id)})
     if post:
@@ -312,12 +312,12 @@ def blog_detail(id):
     return redirect(url_for('blog'))
 
 @app.route('/help')
-@cache.cached(timeout=300)
+@cache.cached(timeout=2)
 def help_page():
     return render_template('help.html')
 
 @app.route('/contact')
-@cache.cached(timeout=300)
+@cache.cached(timeout=2)
 def contact_page():
     return render_template('contact.html')
 
@@ -357,7 +357,7 @@ Pesan:
     return redirect(url_for('contact_page'))
 
 @app.route('/login', methods=['GET', 'POST'])
-@cache.cached(timeout=300)
+@cache.cached(timeout=2)
 def login():
     if session.get('user_id'):
         return redirect(url_for('index'))
@@ -394,7 +394,7 @@ def login():
     return render_template('auth/login.html', GOOGLE_CLIENT_ID=GOOGLE_CLIENT_ID)
 
 @app.route('/register', methods=['GET', 'POST'])
-@cache.cached(timeout=300)
+@cache.cached(timeout=2)
 def register():
     if session.get('user_id'):
         flash('Anda sudah login.', 'info')
@@ -458,7 +458,7 @@ def create_first_admin():
     return render_template('auth/create_first_admin.html')
 
 @app.route('/forgot_password', methods=['GET', 'POST'])
-@cache.cached(timeout=300)
+@cache.cached(timeout=2)
 def forgot_password():
     if request.method == 'POST':
         email = request.form.get('email')
@@ -508,7 +508,7 @@ Tim Box Phone
     return render_template('auth/forgot_password.html')
 
 @app.route('/reset_password/<token>', methods=['GET', 'POST'])
-@cache.cached(timeout=300)
+@cache.cached(timeout=2)
 def reset_password(token):
     try:
         user_id_str = s.loads(token, salt='password-reset-salt', max_age=3600)
@@ -625,7 +625,7 @@ def google_callback():
         return redirect(url_for('login'))
     
 @app.route('/product/<id>')
-@cache.cached(timeout=300)
+@cache.cached(timeout=2)
 def product_detail(id):
     product = products_collection.find_one({'_id': ObjectId(id)})
     if product:
@@ -919,7 +919,7 @@ def delete_admin_reply(review_id):
     return redirect(url_for('index'))
 
 @app.route('/cart', methods=['GET'])
-@cache.cached(timeout=300)
+@cache.cached(timeout=2)
 def view_cart():
     cart_items = []
     subtotal_price = 0
@@ -987,7 +987,7 @@ def clear_item_from_cart(product_id):
     return redirect(url_for('view_cart'))
 
 @app.route('/checkout_success', methods=['GET'])
-@cache.cached(timeout=300)
+@cache.cached(timeout=2)
 @login_required
 def checkout_success():
     if 'cart' not in session or not session['cart']:
@@ -1193,12 +1193,12 @@ def generate_receipt(order_id):
         return redirect(url_for('render_checkout_success', order_id=order_id))
     
 @app.route('/privacy-policy')
-@cache.cached(timeout=300)
+@cache.cached(timeout=2)
 def privacy_policy():
     return render_template('privacy_policy.html')
 
 @app.route('/terms-and-conditions')
-@cache.cached(timeout=300)
+@cache.cached(timeout=2)
 def terms_and_conditions():
     return render_template('terms_and_conditions.html')
 
@@ -1276,6 +1276,6 @@ Sitemap: {base_url}/sitemap.xml
     return Response(robots_content, mimetype='text/plain')
 
 @app.errorhandler(404)
-@cache.cached(timeout=300)
+@cache.cached(timeout=2)
 def page_not_found(e):
     return render_template('404.html'), 404
