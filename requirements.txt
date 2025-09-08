@@ -2,6 +2,7 @@ arabic-reshaper==3.0.0
 asn1crypto==1.5.1
 blinker==1.9.0
 Brotli==1.1.0
+cachelib==0.13.0
 cachetools==5.5.2
 certifi==2025.6.15
 cffi==1.17.1
@@ -12,6 +13,7 @@ cssselect2==0.8.0
 defusedxml==0.7.1
 dnspython==2.7.0
 Flask==3.1.1
+Flask-Caching==2.3.1
 Flask-Mail==0.10.0
 fonttools==4.59.1
 fpdf2==2.8.4
