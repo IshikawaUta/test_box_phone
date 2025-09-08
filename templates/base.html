@@ -56,28 +56,28 @@
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item">
                         <a class="nav-link" href="{{ url_for('product') }}">
-                            <i class="fas fa-box-open"></i> Produk
+                            <i class="fas fa-box-open text-primary-gradient"></i> Produk
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ url_for('blog') }}">
-                            <i class="fas fa-blog"></i> Blog
+                            <i class="fas fa-blog text-primary-gradient"></i> Blog
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ url_for('help_page') }}">
-                            <i class="fas fa-question-circle"></i> help
+                            <i class="fas fa-question-circle text-primary-gradient"></i> help
                         </a>
                     </li>
                         <li class="nav-item">
                         <a class="nav-link" href="{{ url_for('contact_page') }}">
-                            <i class="fas fa-envelope"></i> Kontak
+                            <i class="fas fa-envelope text-primary-gradient"></i> Kontak
                         </a>
                     </li>
                     {% if is_admin_logged_in %} {# Hanya tampilkan jika admin login #}
                     <li class="nav-item">
                         <a class="nav-link" href="{{ url_for('add_product') }}">
-                            <i class="fas fa-plus-circle"></i> Tambah Produk
+                            <i class="fas fa-plus-circle text-primary-gradient"></i> Tambah Produk
                         </a>
                     </li>
                     {% endif %}
@@ -85,7 +85,7 @@
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
                         <a class="nav-link" href="{{ url_for('view_cart') }}">
-                            <i class="fas fa-shopping-cart"></i> Keranjang 
+                            <i class="fas fa-shopping-cart text-primary-gradient"></i> Keranjang 
                             {% if cart_count > 0 %}
                                 <span class="badge bg-danger rounded-pill ms-1">{{ cart_count }}</span>
                             {% endif %}
@@ -94,18 +94,18 @@
                     <li class="nav-item ms-lg-3">
                         {% if is_admin_logged_in %}
                             <a class="nav-link" href="{{ url_for('logout') }}">
-                                <i class="fas fa-user-shield"></i> Admin ({{ current_logged_in_user }}) Logout
+                                <i class="fas fa-user-shield text-primary-gradient"></i> Admin ({{ current_logged_in_user }}) Logout
                             </a>
                         {% elif is_customer_logged_in %}
                             <a class="nav-link" href="{{ url_for('logout') }}">
-                                <i class="fas fa-user-circle"></i> {{ current_logged_in_user }} (Logout)
+                                <i class="fas fa-user-circle text-primary-gradient"></i> {{ current_logged_in_user }} (Logout)
                             </a>
                         {% else %}
                             <a class="nav-link" href="{{ url_for('login') }}">
-                                <i class="fas fa-sign-in-alt"></i> Login
+                                <i class="fas fa-sign-in-alt text-primary-gradient"></i> Login
                             </a>
                             <a class="nav-link" href="{{ url_for('register') }}">
-                                <i class="fas fa-user-plus"></i> Daftar
+                                <i class="fas fa-user-plus text-primary-gradient"></i> Daftar
                             </a>
                         {% endif %}
                     </li>
@@ -114,7 +114,8 @@
         </div>
     </nav>
 
-    <div class="container mt-4 mb-5 flex-grow-1">
+    <div class="mb-5 flex-grow-1">
+        <div class="container flex-grow-1">
         {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}
                 <div class="row">
@@ -129,9 +130,36 @@
                 </div>
             {% endif %}
         {% endwith %}
-
+        </div>
         {% block content %}{% endblock %}
     </div>
+
+    {# Navigasi mobile ditempatkan sebelum footer #}
+    <nav class="mobile-nav-bottom d-md-none d-lg-none d-xl-none">
+        <a href="{{ url_for('index') }}" class="nav-item">
+            <i class="fas fa-home text-primary-gradient"></i>
+            <span class="text-primary fw-bold">Home</span>
+        </a>
+        <a href="{{ url_for('product') }}" class="nav-item">
+            <i class="fas fa-box-open text-primary-gradient"></i>
+            <span class="text-primary fw-bold">Produk</span>
+        </a>
+        <a href="{{ url_for('view_cart') }}" class="nav-item">
+            <i class="fas fa-shopping-cart text-primary-gradient"></i>
+            <span class="text-primary fw-bold">Keranjang</span>
+        </a>
+        {% if is_admin_logged_in or is_customer_logged_in %}
+        <a href="{{ url_for('logout') }}" class="nav-item">
+            <i class="fas fa-sign-in-alt text-primary-gradient"></i>
+            <span class="text-primary fw-bold">Logout</span>
+        </a>
+        {% else %}
+        <a href="{{ url_for('login') }}" class="nav-item">
+            <i class="fas fa-sign-in-alt text-primary-gradient"></i>
+            <span class="text-primary fw-bold">Login</span>
+        </a>
+        {% endif %}
+    </nav>
 
     {# Footer Section #}
     <footer class="footer mt-auto py-4 footer-white shadow-lg">
@@ -164,9 +192,12 @@
     </footer>
 
     <button onclick="topFunction()" id="scrollToTopBtn" title="Gulir ke Atas">↑</button>
+    <div class="custom-cursor"></div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js" async=""></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
 
     <script>
         let mybutton = document.getElementById("scrollToTopBtn");

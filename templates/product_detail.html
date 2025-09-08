@@ -18,8 +18,9 @@
 {% endblock %}
 
 {% block content %}
-    <h1 class="mb-4 text-primary-gradient text-center" style="font-size: 1.2rem;">{{ product.name }}</h1>
-    <div class="card shadow-sm rounded-3 mx-auto" style="max-width: 800px;">
+    <div class="container mt-4 mb-5 flex-grow-1">
+    <h1 class="mb-4 text-primary text-center animate__animated animate__fadeInUp" style="font-size: 2rem; font-weight: bold;"><span class="box-phone-highlight">{{ product.name }}</span></h1>
+    <div class="card shadow-sm rounded-3 mx-auto animate__animated animate__fadeInUp" style="max-width: 800px;">
         <div class="row g-0">
             <div class="col-md-5 d-flex align-items-center justify-content-center p-3">
                 {% if product.image_urls %}
@@ -150,10 +151,10 @@
     </div>
 
 <div class="reviews-section mt-4 mx-auto" style="max-width: 800px;">
-    <h3 class="mb-3">Ulasan Pelanggan</h3>
+    <h3 class="mb-3 scroll-reveal">Ulasan Pelanggan</h3>
     <hr>
     {% if logged_in_username %}
-    <div class="card p-3 mb-4 shadow-sm">
+    <div class="card p-3 mb-4 shadow-sm scroll-reveal">
         <h5>Tulis Ulasan Anda</h5>
         <form action="{{ url_for('submit_review', product_id=product._id) }}" method="post">
             <div class="mb-3">
@@ -179,7 +180,7 @@
     </div>
     {% endif %}
 
-    <div class="list-group">
+    <div class="list-group scroll-reveal">
         {% for review in reviews %}
         <div class="list-group-item list-group-item-action flex-column align-items-start mb-2 rounded-3 shadow-sm">
             <div class="d-flex w-100 justify-content-between">
@@ -226,6 +227,7 @@
             Belum ada ulasan untuk produk ini. Jadilah yang pertama memberikan ulasan!
         </div>
         {% endfor %}
+    </div>
     </div>
     </div>
 

@@ -3,8 +3,9 @@
 {% block title %}Daftar Akun Baru{% endblock %}
 
 {% block content %}
-    <h1 class="mb-4 text-primary-gradient text-center" style="font-size: 1.5rem;">Daftar Akun Baru</h1>
-    <div class="card shadow-sm rounded-3 mx-auto" style="max-width: 400px;">
+    <div class="container mt-4 mb-5 flex-grow-1">
+    <h1 class="mb-4 text-primary text-center fs-2 fw-bold animate__animated animate__fadeInUp"><span class="box-phone-highlight">Daftar </span>Akun Baru</h1>
+    <div class="card shadow-sm rounded-3 mx-auto animate__animated animate__fadeInUp" style="max-width: 400px;">
         <div class="card-body p-4">
             <form method="POST" action="{{ url_for('register') }}">
                 <div class="mb-3">
@@ -47,6 +48,7 @@
                 Sudah punya akun? <a href="{{ url_for('login') }}">Login di sini</a><br><br>
             </div>
         </div>
+    </div>
     </div>
 
     <style>

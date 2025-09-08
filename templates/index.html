@@ -3,10 +3,10 @@
 {% block title %}Daftar Produk{% endblock %}
 
 {% block content %}
-    <div class="row text-center mb-5 hero-section">
-        <div class="col-12">
+    <div class="row text-center mb-5 hero-section position-relative overflow-hidden">
+        <div class="col-12 hero-content-wrapper">
             <h1 class="main-hero-title animate__animated animate__fadeInDown">
-                Android Box Phone Farm <span class="multi-platform-highlight">Multi-platform</span>
+                Android Box Phone Farm <br><span class="multi-platform-highlight">Multi-platform</span>
             </h1>
             <p class="hero-description animate__animated animate__fadeInUp">
                 Solusi untuk Meningkatkan Jumlah Nick yang Banyak Seperti Pengguna Sebenarnya
@@ -21,13 +21,124 @@
                 </a>
             </div>
         </div>
+        
+        <div class="hero-card-left scroll-reveal animate__fadeInLeft">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <i class="fas fa-ellipsis-v text-muted"></i>
+                    <i class="fas fa-wallet text-info"></i>
+                </div>
+                <p class="text-muted mb-0 small">Balance</p>
+                <h3 class="fw-bold"><span id="balance-number">1,650.05</span> <i class="fas fa-link text-muted ms-1 small"></i></h3>
+                <div class="d-flex gap-2 mt-3">
+                    <button class="btn btn-sm btn-info w-100 rounded-pill">Transfer</button>
+                    <button class="btn btn-sm btn-outline-info w-100 rounded-pill">Request</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="hero-card-right scroll-reveal animate__fadeInRight">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <i class="fas fa-check-circle text-success fs-4"></i>
+                    <small class="text-muted">Paid Project</small>
+                </div>
+                <h4 class="fw-bold mb-3"><span id="paid-project-number">6,880</span></h4>
+                <div class="progress" style="height: 5px;">
+                    <div class="progress-bar bg-success" role="progressbar" style="width: 75%;" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+                <p class="small text-muted mt-2">10% from last month</p>
+            </div>
+        </div>
+
+        <div class="hero-card-bottom-left scroll-reveal animate__fadeInLeft animate__delay-1s">
+            <div class="card-body">
+                <p class="text-muted mb-0 small">Expenses</p>
+                <h4 class="fw-bold">$<span id="expenses-number">1,650.05</span></h4>
+                <p class="small text-muted mb-2">10% from last month</p>
+                <div class="d-flex justify-content-between align-items-center">
+                    <span class="small text-muted">Limit</span>
+                    <span class="small text-muted">$2,400</span>
+                </div>
+                <div class="progress" style="height: 5px;">
+                    <div class="progress-bar bg-warning" role="progressbar" style="width: 60%;" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="hero-card-top-right scroll-reveal animate__fadeInRight animate__delay-1s">
+            <div class="card-body">
+                <p class="text-muted mb-0 small">Card Balance</p>
+                <h4 class="fw-bold">$<span id="card-balance-number">2,400.00</span></h4>
+                <div class="progress" style="height: 5px;">
+                    <div class="progress-bar bg-primary" role="progressbar" style="width: 75%;" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+                <p class="small text-muted mt-2">75% Used</p>
+            </div>
+        </div>
     </div>
 
-    <h1 class="mb-4 text-primary-gradient text-center" style="font-size: 1.5rem;">Produk Kami</h1>
+<div class="container my-5">
+    <div class="row">
+        <div class="col-lg-6 mb-4 scroll-reveal">
+            <h2 class="text-center text-primary fw-bold mb-4">Money Flow</h2>
+            <div class="chart-container">
+                <canvas id="moneyFlowChart"></canvas>
+            </div>
+        </div>
+        
+        <div class="col-lg-6 d-flex align-items-center mb-4 scroll-reveal">
+            <div class="text-start">
+                <h2 class="fw-bold text-primary">Tingkatkan Keuangan Anda dengan <span class="box-phone-highlight">Box Phone</span></h2>
+                <p class="lead text-muted">
+                    Android Box Phone Farm adalah solusi revolusioner yang bukan hanya menghemat waktu, tetapi juga membuka peluang baru untuk meningkatkan pendapatan digital Anda.
+                </p>
+                <p class="text-muted">
+                    Dengan mengelola banyak akun secara simultan dan otomatis, Anda dapat mengoptimalkan kampanye pemasaran, meningkatkan traffic situs web, dan mengumpulkan data dengan efisien. Setiap perangkat yang beroperasi dalam Phone Farm Anda adalah aset yang bekerja 24/7 untuk pertumbuhan bisnis Anda. Ini adalah investasi cerdas yang mengubah waktu dan tenaga menjadi potensi keuntungan finansial yang signifikan.
+                </p>
+                <a href="{{ url_for('product') }}" class="btn btn-outline-primary mt-3 rounded-pill">Mulai Sekarang</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container my-5">
+    <div class="row">
+        <div class="col-lg-6 mb-3 d-flex align-items-center justify-content-center scroll-reveal" style="padding: 1rem 1rem;">
+            <div class="code-editor w-100">
+                <div class="header">
+                    <span class="dot red"></span>
+                    <span class="dot yellow"></span>
+                    <span class="dot green"></span>
+                    <span class="title">box-phone.exe</span>
+                </div>
+                <div class="code-body">
+                    <pre><code id="typing-code"></code></pre>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6 d-flex align-items-center scroll-reveal">
+            <div class="text-start">
+                <h2 class="fw-bold text-primary">Apa Itu Android <span class="box-phone-highlight">Box Phone Farm?</span></h2>
+                <p class="lead text-muted">
+                    Android Box Phone Farm adalah solusi inovatif yang memungkinkan Anda mengelola banyak perangkat Android secara terpusat. Produk ini sangat cocok untuk kebutuhan pemasaran digital, pengujian aplikasi, atau operasi lain yang membutuhkan banyak akun aktif secara simultan.
+                </p>
+                <p class="text-muted">
+                    Dengan produk ini, Anda dapat menghemat ruang dan waktu. Semua perangkat terintegrasi dalam satu kotak, dengan sistem manajemen daya dan konektivitas yang efisien. Tingkatkan produktivitas Anda tanpa kerumitan dan kelola semua akun Anda dengan mudah.
+                </p>
+                <a href="{{ url_for('product') }}" class="btn btn-outline-primary mt-3 rounded-pill">Dapatkan Sekarang</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <div class="container mt-4 mb-5 flex-grow-1">
+    <h1 class="mb-4 text-primary-gradient text-center animate__animated animate__fadeInUp" style="font-size: 1.5rem;">Produk Kami</h1>
     <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
         {% if products %}
             {% for product in products %}
-            <div class="col">
+            <div class="col scroll-reveal">
                 <div class="card h-100 shadow-sm rounded-3">
                     {% if product.image_urls %} {# Cek apakah ada daftar gambar #}
                         <img src="{{ product.image_urls[0] }}" class="card-img-top p-3 rounded-top-3 lazyload" alt="{{ product.name }}" style="max-height: 200px; object-fit: contain;border-bottom: 1px solid #11a397;">
@@ -81,14 +192,15 @@
             </div>
         {% endif %}
     </div>
+    </div>
 
 <div class="container my-5">
-    <div class="text-center mb-5">
-        <h2 class="fw-bold text-primary">Discover everything you can do with Box Phone</h2>
+    <div class="text-center mb-5 scroll-reveal">
+        <h2 class="fw-bold text-primary">Discover everything you can do <span class="box-phone-highlight">with Box Phone</span></h2>
         <p class="lead text-muted">Explore our suite of features designed to streamline your operations, drive sales, and enhance customer satisfaction.</p>
     </div>
     <div class="row row-cols-1 row-cols-md-3 g-4">
-        <div class="col">
+        <div class="col scroll-reveal">
             <div class="card h-100 shadow-sm rounded-3">
                 <div class="card-body d-flex flex-column text-center">
                     <h5 class="card-title text-navy fw-bold">PHONE BOX CASE ONLY</h5>
@@ -107,7 +219,7 @@
             </div>
         </div>
 
-        <div class="col">
+        <div class="col scroll-reveal">
             <div class="card h-100 shadow-sm rounded-3">
                 <div class="card-body d-flex flex-column text-center">
                     <h5 class="card-title text-navy fw-bold">PHONE BOX FARM SAMSUNG S8+</h5>
@@ -126,7 +238,7 @@
             </div>
         </div>
 
-        <div class="col">
+        <div class="col scroll-reveal">
             <div class="card h-100 shadow-sm rounded-3">
                 <div class="card-body d-flex flex-column text-center">
                     <h5 class="card-title text-navy fw-bold">PHONE BOX FARM SAMSUNG NOTE 8</h5>
@@ -146,4 +258,302 @@
         </div>
     </div>
 </div>
+<section class="py-5">
+    <div class="container">
+        <div class="text-center mb-5 scroll-reveal">
+            <h2 class="text-primary fw-bold"><span class="box-phone-highlight">Success stories</span> speak louder</h2>
+            <p class="section-subtitle text-muted">The best way to showcase our commitment is through the experiences and stories of those who have partnered with us.</p>
+        </div>
+        <div class="row text-center">
+            <div class="col-md-4 mb-4 scroll-reveal">
+                <div class="testimonial-card p-4 h-100">
+                    <p class="testimonial-quote">This software isn't just a tool; it's my secret weapon for digital success. Would totally recommend.</p>
+                    <div class="d-flex align-items-center justify-content-center mt-4">
+                        <i class="fas fa-user p-3" style="background-color: #21c0b3; border-radius: 50%; margin-right: 1rem; color: #fff;"></i>
+                        <div class="text-start">
+                            <h6 class="testimonial-name mb-0">Frederic Hill</h6>
+                            <small class="testimonial-role text-muted">Founder & CEO</small>
+                        </div>
+                    </div>
+                    <div class="testimonial-stat mt-4">
+                        <div class="animated-number stat-number" data-target="150">0</div>
+                        <p class="stat-description text-muted">Increase in conversion rates</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4 scroll-reveal">
+                <div class="testimonial-card p-4 h-100">
+                    <p class="testimonial-quote">Real-time analytics helped me optimize my marketing, increasing website traffic.</p>
+                    <div class="d-flex align-items-center justify-content-center mt-4">
+                        <i class="fas fa-user p-3" style="background-color: #21c0b3; border-radius: 50%; margin-right: 1rem; color: #fff;"></i>
+                        <div class="text-start">
+                            <h6 class="testimonial-name mb-0">Safaa Sampson</h6>
+                            <small class="testimonial-role text-muted">Account Executive</small>
+                        </div>
+                    </div>
+                    <div class="testimonial-stat mt-4">
+                        <div class="animated-number stat-number" data-target="50">0</div>
+                        <p class="stat-description text-muted">Improvement in client satisfaction</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4 scroll-reveal">
+                <div class="testimonial-card p-4 h-100">
+                    <p class="testimonial-quote">Thanks to this software's marketing tools, my campaigns became laser-focused.</p>
+                    <div class="d-flex align-items-center justify-content-center mt-4">
+                        <i class="fas fa-user p-3" style="background-color: #21c0b3; border-radius: 50%; margin-right: 1rem; color: #fff;"></i>
+                        <div class="text-start">
+                            <h6 class="testimonial-name mb-0">Brendan Buck</h6>
+                            <small class="testimonial-role text-muted">Digital Marketer</small>
+                        </div>
+                    </div>
+                    <div class="testimonial-stat mt-4">
+                        <div class="animated-number stat-number" data-target="30">0</div>
+                        <p class="stat-description text-muted">Increase in customer engagement</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const codeElement = document.getElementById('typing-code');
+
+    const keywords = {
+        'import': 'keyword',
+        'from': 'keyword',
+        'const': 'keyword',
+        'useState': 'function',
+        'useClaude': 'function',
+        'usePromptTemplate': 'function',
+        'return': 'keyword',
+        'div': 'html-tag',
+        'h1': 'html-tag',
+    };
+
+    const codeText = `import React, { useState } from 'react';
+import { useClaude, usePromptTemplate } from '@box.phone/fram.phone';
+
+const SmartCodeGenerator = () => {
+    // ... logic code here ...
+    const templates = usePromptTemplate({
+        react: 'Coba sekarang',
+    });
+    return (
+        <div>
+            <h1>SOLUSI UNTUK BANYAK PERANGKAT!</h1>
+        </div>
+    );
+};`;
+
+    let i = 0;
+    const speed = 30;
+    const resetDelay = 1000;
+
+    function typeWriter() {
+        if (i < codeText.length) {
+            let foundKeyword = false;
+            
+            for (const key in keywords) {
+                if (codeText.substring(i, i + key.length) === key) {
+                    const cssClass = keywords[key];
+                    codeElement.innerHTML += `<span class="${cssClass}">${key}</span>`;
+                    i += key.length;
+                    foundKeyword = true;
+                    break;
+                }
+            }
+            
+            if (!foundKeyword) {
+                const char = codeText.charAt(i);
+                if (char === '\n') {
+                    codeElement.innerHTML += '<br>';
+                } else if (codeText.substring(i, i + 4) === '    ') {
+                    codeElement.innerHTML += '&nbsp;&nbsp;&nbsp;&nbsp;';
+                    i += 3;
+                } else {
+                    codeElement.innerHTML += char;
+                }
+                i++;
+            }
+
+            setTimeout(typeWriter, speed);
+        } else {
+            const cursorSpan = document.createElement('span');
+            cursorSpan.className = 'cursor';
+            codeElement.appendChild(cursorSpan);
+
+            setTimeout(() => {
+                codeElement.innerHTML = '';
+                i = 0;
+                typeWriter();
+            }, resetDelay);
+        }
+    }
+
+    typeWriter();
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+
+    /**
+     * Fungsi untuk menganimasikan angka dari 0 ke nilai target.
+     @param {HTMLElement} element - Elemen DOM yang berisi angka untuk dianimasikan.
+     */
+    const animateNumber = (element) => {
+        const target = parseInt(element.getAttribute('data-target'));
+        
+        if (isNaN(target)) {
+            console.error('Data target tidak valid. Pastikan atribut data-target berisi angka.');
+            return;
+        }
+
+        const prefix = '+';
+        const suffix = ' %';
+        
+        let current = 0;
+        const duration = 2000;
+        const frameRate = 10;
+        const increment = target / (duration / frameRate);
+
+        const timer = setInterval(() => {
+            current += increment;
+            
+            if (current >= target) {
+                current = target;
+                clearInterval(timer);
+            }
+            
+            element.innerText = `${prefix} ${Math.floor(current)}${suffix}`;
+        }, frameRate);
+    };
+
+    const observer = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                animateNumber(entry.target);
+                
+                observer.unobserve(entry.target);
+            }
+        });
+    }, {
+        threshold: 0.5 
+    });
+
+    document.querySelectorAll('.animated-number').forEach(numberElement => {
+        observer.observe(numberElement);
+    });
+});
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+
+        const labels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+        const initialIncomeData = [750, 800, 950, 1050, 900, 980, 1020, 950, 880, 780, 850, 700];
+        const initialExpensesData = [550, 600, 700, 750, 650, 700, 680, 720, 600, 580, 620, 500];
+
+        const data = {
+            labels: labels,
+            datasets: [{
+                label: 'Income',
+                data: initialIncomeData.slice(),
+                borderColor: '#21c0b3',
+                backgroundColor: 'rgba(33, 192, 179, 0.1)',
+                borderWidth: 2,
+                tension: 0.4,
+                fill: 'origin',
+                pointRadius: 0,
+                pointHoverRadius: 6,
+                pointHoverBackgroundColor: '#21c0b3',
+            }, {
+                label: 'Expenses',
+                data: initialExpensesData.slice(),
+                borderColor: '#3e4975',
+                backgroundColor: 'rgba(62, 73, 117, 0.1)',
+                borderWidth: 2,
+                tension: 0.4,
+                fill: 'origin',
+                pointRadius: 0,
+                pointHoverRadius: 6,
+                pointHoverBackgroundColor: '#3e4975',
+            }]
+        };
+
+        const config = {
+            type: 'line',
+            data: data,
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'top',
+                        labels: {
+                            usePointStyle: true,
+                            boxWidth: 8,
+                            font: {
+                                size: 14,
+                            },
+                        }
+                    },
+                    tooltip: {
+                        backgroundColor: '#1a1f38',
+                        titleColor: '#fff',
+                        bodyColor: '#fff',
+                        borderColor: '#fff',
+                        borderWidth: 1,
+                        cornerRadius: 8,
+                    }
+                },
+                scales: {
+                    x: {
+                        grid: {
+                            display: false,
+                        },
+                        ticks: {
+                            color: '#6c757d',
+                        }
+                    },
+                    y: {
+                        beginAtZero: true,
+                        grid: {
+                            color: '#f0f0f0',
+                        },
+                        ticks: {
+                            color: '#6c757d',
+                        }
+                    }
+                }
+            }
+        };
+
+        const moneyFlowChart = new Chart(
+            document.getElementById('moneyFlowChart'),
+            config
+        );
+
+        function updateChartData() {
+            moneyFlowChart.data.labels.shift();
+            moneyFlowChart.data.datasets[0].data.shift();
+            moneyFlowChart.data.datasets[1].data.shift();
+
+            const nextMonthIndex = (moneyFlowChart.data.labels.length) % labels.length;
+            const newLabel = labels[nextMonthIndex];
+            moneyFlowChart.data.labels.push(newLabel);
+
+            const newIncome = Math.floor(Math.random() * (1200 - 600 + 1)) + 600;
+            const newExpenses = Math.floor(Math.random() * (800 - 400 + 1)) + 400;
+
+            moneyFlowChart.data.datasets[0].data.push(newIncome);
+            moneyFlowChart.data.datasets[1].data.push(newExpenses);
+
+            moneyFlowChart.update();
+        }
+
+        setInterval(updateChartData, 1000);
+    });
+</script>
 {% endblock %}

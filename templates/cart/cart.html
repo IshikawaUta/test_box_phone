@@ -3,10 +3,11 @@
 {% block title %}Keranjang Belanja{% endblock %}
 
 {% block content %}
-    <h1 class="mb-4 text-primary-gradient text-center" style="font-size: 1.5rem;">Keranjang Belanja Anda</h1>
+    <div class="container mt-4 mb-5 flex-grow-1">
+    <h1 class="mb-4 text-primary text-center animate__animated animate__fadeInUp" style="font-size: 1.5rem; font-weight: bold;"><span class="box-phone-highlight">Keranjang Belanja Anda</span></h1>
 
     {% if cart_items %}
-        <div class="card shadow-sm rounded-3 p-4">
+        <div class="card shadow-sm rounded-3 p-4 animate__animated animate__fadeInUp">
             <div class="table-responsive">
                 <table class="table table-hover align-middle">
                     <thead>
@@ -80,11 +81,12 @@
             </div>
         </div>
     {% else %}
-        <div class="alert alert-info text-center" role="alert">
+        <div class="alert alert-info text-center animate__animated animate__fadeInUp" role="alert">
             Keranjang belanja Anda kosong.
             <p class="mt-2"><a href="{{ url_for('product') }}" class="alert-link">Mulai belanja sekarang!</a></p>
         </div>
     {% endif %}
+    </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {

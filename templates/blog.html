@@ -3,7 +3,8 @@
 {% block title %}Blog{% endblock %}
 
 {% block content %}
-<h1 class="mb-4 text-primary-gradient text-center" style="font-size: 1.5rem;">Blog</h1>
+<div class="container mt-4 mb-5 flex-grow-1">
+<h1 class="mb-4 text-primary text-center animate__animated animate__fadeInUp" style="font-size: 2rem; font-weight: bold;"><span class="box-phone-highlight">Blog Kami</span></h1>
 
 <div class="d-flex justify-content-end mb-4">
     {% if is_admin_logged_in %}
@@ -16,7 +17,7 @@
 {% if posts %}
 <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
     {% for post in posts %}
-    <div class="col">
+    <div class="col scroll-reveal">
         <div class="card h-100 shadow-sm rounded-3">
             {% if post.image_url %}
             <img src="{{ post.image_url }}" class="card-img-top blog-list-img" alt="{{ post.title }}" style="max-height: 200px; object-fit: contain;border-bottom: 1px solid #11a397; padding: 1rem 1rem;">
@@ -52,4 +53,5 @@
     Belum ada postingan blog.
 </div>
 {% endif %}
+</div>
 {% endblock %}

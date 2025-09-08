@@ -3,6 +3,7 @@ import re
 import io
 from flask import Flask, render_template, request, redirect, url_for, flash, session, Response, send_file
 from flask_mail import Mail, Message
+from flask_caching import Cache
 from werkzeug.security import generate_password_hash, check_password_hash
 from markupsafe import Markup, escape
 from pymongo import MongoClient
@@ -40,6 +41,8 @@ project_root = os.path.join(current_dir, "..")
 
 app = Flask(__name__, root_path=project_root, template_folder="templates")
 app.static_folder = 'static'
+app.config['CACHE_TYPE'] = 'SimpleCache'
+cache = Cache(app)
 
 app.secret_key = os.getenv('SECRET_KEY')
 if not app.secret_key:
@@ -208,6 +211,7 @@ def inject_cart_count():
 PER_PAGE = 3
 
 @app.route('/')
+@cache.cached(timeout=300)
 def index():
     selected_category_param = request.args.get('category')
     search_query = request.args.get('q', '').strip()
@@ -250,6 +254,7 @@ def index():
                            total_products=total_products)
 
 @app.route('/product')
+@cache.cached(timeout=300)
 def product():
     selected_category_param = request.args.get('category')
     search_query = request.args.get('q', '').strip()
@@ -292,11 +297,13 @@ def product():
                            total_products=total_products)
 
 @app.route('/blog')
+@cache.cached(timeout=300)
 def blog():
     posts = list(posts_collection.find().sort('created_at', -1))
     return render_template('blog.html', posts=posts)
 
 @app.route('/blog/<id>')
+@cache.cached(timeout=300)
 def blog_detail(id):
     post = posts_collection.find_one({'_id': ObjectId(id)})
     if post:
@@ -305,10 +312,12 @@ def blog_detail(id):
     return redirect(url_for('blog'))
 
 @app.route('/help')
+@cache.cached(timeout=300)
 def help_page():
     return render_template('help.html')
 
 @app.route('/contact')
+@cache.cached(timeout=300)
 def contact_page():
     return render_template('contact.html')
 
@@ -348,6 +357,7 @@ Pesan:
     return redirect(url_for('contact_page'))
 
 @app.route('/login', methods=['GET', 'POST'])
+@cache.cached(timeout=300)
 def login():
     if session.get('user_id'):
         return redirect(url_for('index'))
@@ -384,6 +394,7 @@ def login():
     return render_template('auth/login.html', GOOGLE_CLIENT_ID=GOOGLE_CLIENT_ID)
 
 @app.route('/register', methods=['GET', 'POST'])
+@cache.cached(timeout=300)
 def register():
     if session.get('user_id'):
         flash('Anda sudah login.', 'info')
@@ -447,6 +458,7 @@ def create_first_admin():
     return render_template('auth/create_first_admin.html')
 
 @app.route('/forgot_password', methods=['GET', 'POST'])
+@cache.cached(timeout=300)
 def forgot_password():
     if request.method == 'POST':
         email = request.form.get('email')
@@ -496,6 +508,7 @@ Tim Box Phone
     return render_template('auth/forgot_password.html')
 
 @app.route('/reset_password/<token>', methods=['GET', 'POST'])
+@cache.cached(timeout=300)
 def reset_password(token):
     try:
         user_id_str = s.loads(token, salt='password-reset-salt', max_age=3600)
@@ -612,6 +625,7 @@ def google_callback():
         return redirect(url_for('login'))
     
 @app.route('/product/<id>')
+@cache.cached(timeout=300)
 def product_detail(id):
     product = products_collection.find_one({'_id': ObjectId(id)})
     if product:
@@ -905,6 +919,7 @@ def delete_admin_reply(review_id):
     return redirect(url_for('index'))
 
 @app.route('/cart', methods=['GET'])
+@cache.cached(timeout=300)
 def view_cart():
     cart_items = []
     subtotal_price = 0
@@ -972,6 +987,7 @@ def clear_item_from_cart(product_id):
     return redirect(url_for('view_cart'))
 
 @app.route('/checkout_success', methods=['GET'])
+@cache.cached(timeout=300)
 @login_required
 def checkout_success():
     if 'cart' not in session or not session['cart']:
@@ -1177,10 +1193,12 @@ def generate_receipt(order_id):
         return redirect(url_for('render_checkout_success', order_id=order_id))
     
 @app.route('/privacy-policy')
+@cache.cached(timeout=300)
 def privacy_policy():
     return render_template('privacy_policy.html')
 
 @app.route('/terms-and-conditions')
+@cache.cached(timeout=300)
 def terms_and_conditions():
     return render_template('terms_and_conditions.html')
 
@@ -1193,9 +1211,11 @@ def sitemap():
         {'loc': url_for('login', _external=True), 'lastmod': datetime.now().isoformat(), 'changefreq': 'monthly', 'priority': '0.8'},
         {'loc': url_for('register', _external=True), 'lastmod': datetime.now().isoformat(), 'changefreq': 'monthly', 'priority': '0.8'},
         {'loc': url_for('view_cart', _external=True), 'lastmod': datetime.now().isoformat(), 'changefreq': 'weekly', 'priority': '0.6'},
+        {'loc': url_for('help_page', _external=True), 'lastmod': datetime.now().isoformat(), 'changefreq': 'monthly', 'priority': '0.5'},
         {'loc': url_for('privacy_policy', _external=True), 'lastmod': datetime.now().isoformat(), 'changefreq': 'monthly', 'priority': '0.5'},
         {'loc': url_for('terms_and_conditions', _external=True), 'lastmod': datetime.now().isoformat(), 'changefreq': 'monthly', 'priority': '0.5'},
         {'loc': url_for('forgot_password', _external=True), 'lastmod': datetime.now().isoformat(), 'changefreq': 'monthly', 'priority': '0.4'},
+        {'loc': url_for('blog', _external=True), 'lastmod': datetime.now().isoformat(), 'changefreq': 'weekly', 'priority': '0.9'},
     ]
 
     product_urls = []
@@ -1212,7 +1232,22 @@ def sitemap():
     except Exception as e:
         print(f"Error fetching products for sitemap: {e}")
 
-    urls = static_urls + product_urls
+    blog_urls = []
+    try:
+        posts = posts_collection.find({}, {'_id': 1, 'updated_at': 1, 'created_at': 1})
+        for post in posts:
+            lastmod_date = post.get('updated_at') or post.get('created_at') or datetime.now()
+            lastmod = lastmod_date.isoformat()
+            blog_urls.append({
+                'loc': url_for('blog_detail', id=str(post['_id']), _external=True),
+                'lastmod': lastmod,
+                'changefreq': 'weekly',
+                'priority': '0.8'
+            })
+    except Exception as e:
+        print(f"Error fetching blog posts for sitemap: {e}")
+
+    urls = static_urls + product_urls + blog_urls
 
     xml_content = '<?xml version="1.0" encoding="UTF-8"?>\n'
     xml_content += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
@@ -1239,3 +1274,8 @@ Allow: /
 Sitemap: {base_url}/sitemap.xml
 """
     return Response(robots_content, mimetype='text/plain')
+
+@app.errorhandler(404)
+@cache.cached(timeout=300)
+def page_not_found(e):
+    return render_template('404.html'), 404

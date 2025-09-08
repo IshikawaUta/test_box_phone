@@ -3,9 +3,10 @@
 {% block title %}Daftar Produk{% endblock %}
 
 {% block content %}
-    <h1 class="mb-4 text-primary-gradient text-center" style="font-size: 1.5rem;">Daftar Produk</h1>
+    <div class="container mt-4 mb-5 flex-grow-1">
+    <h1 class="mb-5 text-primary text-center animate__animated animate__fadeInUp" style="font-size: 2rem; font-weight: bold;"><span class="box-phone-highlight">Daftar Produk</span></h1>
     {# Filter Kategori #}
-    <div class="mb-4 p-3 bg-white rounded-3 shadow-sm">
+    <div class="mb-4 p-3 bg-white rounded-3 shadow-sm animate__animated animate__fadeInUp">
         <h5 class="mb-3">Filter Berdasarkan Kategori:</h5>
         <div class="d-flex flex-wrap gap-2">
             <a href="{{ url_for('product', category='all', q=search_query, page=1) }}" class="btn {% if selected_category == 'all' or selected_category == None %}btn-primary{% else %}btn-outline-primary{% endif %} rounded-pill">
@@ -20,7 +21,7 @@
     </div>
 
     {# Bilah Pencarian Produk #}
-    <div class="mb-4 p-3 bg-white rounded-3 shadow-sm">
+    <div class="mb-4 p-3 bg-white rounded-3 shadow-sm animate__animated animate__fadeInUp">
         <h5 class="mb-3">Cari Produk:</h5>
         <form class="d-flex" action="{{ url_for('product') }}" method="GET">
             <input class="form-control me-2 rounded-pill" type="search" placeholder="Cari berdasarkan nama produk..." aria-label="Search" name="q" value="{{ search_query | default('') }}">
@@ -40,7 +41,7 @@
     <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
         {% if products %}
             {% for product in products %}
-            <div class="col">
+            <div class="col scroll-reveal">
                 <div class="card h-100 shadow-sm rounded-3">
                     {% if product.image_urls %} {# Cek apakah ada daftar gambar #}
                         <img src="{{ product.image_urls[0] }}" class="card-img-top p-3 rounded-top-3 lazyload" alt="{{ product.name }}" style="max-height: 200px; object-fit: contain;border-bottom: 1px solid #11a397;">
@@ -117,4 +118,5 @@
         </ul>
     </nav>
     {% endif %}
+    </div>
 {% endblock %}
