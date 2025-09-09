@@ -26,7 +26,6 @@ import json
 from itsdangerous import URLSafeTimedSerializer, SignatureExpired, BadTimeSignature
 from datetime import datetime, timedelta
 import secrets
-from app import app
 
 load_dotenv()
 styles = getSampleStyleSheet()
