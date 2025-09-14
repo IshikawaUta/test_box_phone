@@ -440,13 +440,12 @@ body {
 }
 .hero-section {
     min-height: 80vh;
-    width: 100%;
+    width: 99%;
     display: flex;
     justify-content: center;
     align-items: center;
     background: linear-gradient(135deg, #ffffff1a, #ffffff1a);
-    padding: 60px 0;
-    border-radius: 15px;
+    margin-left: 0.5rem;
     position: relative;
     overflow: hidden;
 }
